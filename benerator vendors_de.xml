@@ -1,0 +1,1352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup xmlns="http://databene.org/benerator/0.9.8"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://databene.org/benerator/0.9.8 benerator-0.9.8.xsd"
+        defaultEncoding="Cp1252"
+        defaultDataset="GB"
+        defaultLocale="en_GB"
+        defaultLineSeparator="\r\n">
+  
+  <import class="org.databene.benerator.distribution.function.*"/>
+  <import platforms="db,csv" />
+	<import defaults="true" domains="organization,address,person,net" />
+	<import class="org.databene.benerator.distribution.function.*,
+	org.databene.benerator.primitive.*,org.databene.platform.db.*"/>
+	<import class="org.databene.commons.TimeUtil"/>
+	
+	
+	<comment>
+		 Populates a database
+	</comment>
+	 
+    <comment>defining a database that will be referred by the vid 'db' later</comment>
+    <database id="db"
+        url="jdbc:mysql://localhost:3306/datagenerator"
+        driver="com.mysql.jdbc.Driver"
+        schema="datagenerator"
+		catalog="datagenerator"
+        user="root"
+        password="pramod02"/>
+		
+		
+	
+	<comment>Creating Two Tables For Orders and Total Number Of Sales Of GBI As "sales_de","saledetails_de" </comment>	
+	
+	<execute target="db" >
+		 create table sales_de(
+         orderid int,
+		 vendorid int,
+		 sale_time varchar(100)
+
+     )
+	</execute>
+	
+	<execute target="db" >
+		 create table saledetails_de(
+         orderdetailid int unique AUTO_INCREMENT,
+         materialid int,
+	     orderid int,
+         count int) 
+	</execute>
+	
+    <comment>By Using Bean Id,Defining All Months from 2009-2011 With An Unique Identity using class "DateTimeGenerator" To Generate Data As Per Months By Defining Them As An Element In The Program </comment>
+	
+	<bean id="dtGen0901" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-01-01'/>
+		<property name='maxDate'          value='2009-01-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />				
+	</bean>
+    <bean id="dtGen1001" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-01-01'/>
+		<property name='maxDate'          value='2010-01-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />				
+	</bean>
+	<bean id="dtGen1101" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-01-01'/>
+		<property name='maxDate'          value='2011-01-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />				
+	</bean>
+	<bean id="dtGen0902" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-02-01'/>
+		<property name='maxDate'          value='2009-02-28'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1002" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-02-01'/>
+		<property name='maxDate'          value='2010-02-28'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1102" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-02-01'/>
+		<property name='maxDate'          value='2011-02-28'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>	
+	<bean id="dtGen0903" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-03-01'/>
+		<property name='maxDate'          value='2009-03-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+	<bean id="dtGen1003" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-03-01'/>
+		<property name='maxDate'          value='2010-03-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1103" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-03-01'/>
+		<property name='maxDate'          value='2011-03-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>	
+	<bean id="dtGen0904" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-04-01'/>
+		<property name='maxDate'          value='2009-04-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1004" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-04-01'/>
+		<property name='maxDate'          value='2010-04-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1104" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-04-01'/>
+		<property name='maxDate'          value='2011-04-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen0905" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-05-01'/>
+		<property name='maxDate'          value='2009-05-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1005" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-05-01'/>
+		<property name='maxDate'          value='2010-05-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1105" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-05-01'/>
+		<property name='maxDate'          value='2011-05-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen0906" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-06-01'/>
+		<property name='maxDate'          value='2009-06-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1006" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-06-01'/>
+		<property name='maxDate'          value='2010-06-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1106" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-06-01'/>
+		<property name='maxDate'          value='2011-06-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen0907" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-07-01'/>
+		<property name='maxDate'          value='2009-07-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1007" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-07-01'/>
+		<property name='maxDate'          value='2010-07-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1107" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-07-01'/>
+		<property name='maxDate'          value='2011-07-31'/>
+        <property name='dateGranularity'  value='00-00-01'  /> 		
+	</bean>
+	
+	<bean id="dtGen0908" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-08-01'/>
+		<property name='maxDate'          value='2009-08-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+	<bean id="dtGen1008" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-08-01'/>
+		<property name='maxDate'          value='2010-08-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1108" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-08-01'/>
+		<property name='maxDate'          value='2011-08-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen0909" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-09-01'/>
+		<property name='maxDate'          value='2009-09-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+	<bean id="dtGen1009" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-09-01'/>
+		<property name='maxDate'          value='2010-09-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+	<bean id="dtGen1109" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-09-01'/>
+		<property name='maxDate'          value='2011-09-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />	
+	</bean>
+	<bean id="dtGen0910" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-10-01'/>
+		<property name='maxDate'          value='2009-10-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />	
+	</bean>
+	<bean id="dtGen1010" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-10-01'/>
+		<property name='maxDate'          value='2010-10-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1110" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-10-01'/>
+		<property name='maxDate'          value='2011-10-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>	
+	<bean id="dtGen0911" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-11-01'/>
+		<property name='maxDate'          value='2009-11-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />	
+	</bean>
+	<bean id="dtGen1011" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-11-01'/>
+		<property name='maxDate'          value='2010-11-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />	
+	</bean>
+	<bean id="dtGen1111" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-11-01'/>
+		<property name='maxDate'          value='2011-11-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />	
+	</bean>
+	<bean id="dtGen0912" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-12-01'/>
+		<property name='maxDate'          value='2009-12-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+		<bean id="dtGen1012" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-12-01'/>
+		<property name='maxDate'          value='2010-12-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+		<bean id="dtGen1112" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-12-01'/>
+		<property name='maxDate'          value='2011-12-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+	
+	<comment>In Consideration To Real Data Of Overall Orders In Germany in 2009(i.e 405000 Orders), Considering 1% Of Overall Orders As Total Orders Of GBI  in 2009(i.e 4050 Orders), Generating Data For Orders In 2009</comment>
+	
+    <comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 5.91% Of Orders In Table "sales_de" For Month Janury 2009(i.e 239 Orders)</comment>	
+	
+	
+	<!--<generate name="sales_de" type="sales_de" count="239" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="1" max="239"/>
+	 
+	 <comment>Defining A Variable As "weightings" For Importing Data From CSV File For Mapping With A Weighted Distribution</comment>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <comment>Defining An Attribute "vendorid" To Take Reference From Table "vendor_de" Which Is Defined In DATABASE And Assigning Values As Per Weightage Given In CSV File </comment> 
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <comment>Defining An Attribute "sale_time" To Generate Date As Per Defined Date Identity</comment> 
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0901"/>
+	 
+	 <comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+	 <comment>Defining An Attribute "orderid" To Generate Values Referred To Attribute "orderid" From Table "sales_de"</comment>
+	 
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <comment>Defining Attribute "materialid" To Take Values From Table "material_us" Which Is Defined In DATABASE</comment>
+
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	 
+	 <attribute name="count" type="int" min="1" max="2" /> 
+	 
+	 </generate>
+	</generate>-->
+	 
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 4.261% Of Orders In February Of Year 2009(i.e 171 Orders)</comment>
+    	
+	<generate name="sales_de" type="sales_de" count="171" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="240" max="410"/>
+	 
+	 <comment>Defining A Variable As "weightings" For Importing Data From CSV File For Mapping With A Weighted Distribution</comment>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <comment>Defining An Attribute "vendorid" To Take Reference From Table "vendor_de" Which Is Defined In DATABASE And Assigning Values As Per Weightage Given In CSV File </comment> 
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <comment>Defining An Attribute "sale_time" To Generate Date As Per Defined Date Identity</comment> 
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0902"/>
+	 
+	 <comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+	 <comment>Defining An Attribute "orderid" To Generate Values Referred To Attribute "orderid" From Table "sales_de"</comment>
+	 
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <comment>Defining Attribute "materialid" To Take Values From Table "material_us" Which Is Defined In DATABASE</comment>
+
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	 
+	 <attribute name="count" type="int" min="1" max="2" /> 
+	 
+	 </generate>
+	</generate>
+	
+	
+	 <!--<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 4.48% Of Orders In March Of Year 2009(i.e 180 Orders)</comment>	
+	 
+	<generate name="sales_de" type="sales_de" count="180" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="411" max="590"/>
+	 
+	 <comment>Defining A Variable As "weightings" For Importing Data From CSV File For Mapping With A Weighted Distribution</comment>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <comment>Defining An Attribute "vendorid" To Take Reference From Table "vendor_de" Which Is Defined In DATABASE And Assigning Values As Per Weightage Given In CSV File </comment> 
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <comment>Defining An Attribute "sale_time" To Generate Date As Per Defined Date Identity</comment> 
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0903"/>
+	 
+	 <comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+	 <comment>Defining An Attribute "orderid" To Generate Values Referred To Attribute "orderid" From Table "sales_de"</comment>
+	 
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <comment>Defining Attribute "materialid" To Take Values From Table "material_us" Which Is Defined In DATABASE</comment>
+
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	 
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 7.54% Of Orders In April Of Year 2009(i.e 304 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	 
+	<generate name="sales_de" type="sales_de" count="304" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="591" max="894"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0904"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	 
+	
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 8.71% Of Orders In May Of Year 2009(i.e 351 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+		<generate name="sales_de" type="sales_de" count="351" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="895" max="1245"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0905"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 9.82% Of Orders In June Of Year 2009(i.e 398 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	<generate name="sales_de" type="sales_de" count="398" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="1246" max="1643"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0906"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 12.89% Of Orders In July Of Year 2009(i.e 521 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+    <generate name="sales_de" type="sales_de" count="521" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="1644" max="2164"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0907"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 12.12% Of Orders In August Of Year 2009(i.e 489 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+    <generate name="sales_de" type="sales_de" count="489" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="2165" max="2653"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0908"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 11.34% Of Orders In September Of Year 2009(i.e 458 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+   <generate name="sales_de" type="sales_de" count="458" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="2654" max="3112"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0909"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 10.98% Of Orders In October Of Year 2009(i.e 443 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	<generate name="sales_de" type="sales_de" count="443" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="3113" max="3555"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0910"/>
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 7.01% Of Orders In November Of Year 2009(i.e 282 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+    <generate name="sales_de" type="sales_de" count="281" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="3556" max="3836"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0911"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 4.89% Of Orders In December Of Year 2009(i.e 197 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+    <generate name="sales_de" type="sales_de" count="197" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="3837" max="4033"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0912"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration To Real Data Of Overall Orders In Germany in 2010(i.e 401000 Orders), Considering 1% Of Overall Orders As Total Orders Of GBI  in 2010(i.e appr. 4010 Orders), Generating Data For Orders In 2009</comment>
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 5.91% Of Orders In January Of Year 2010(i.e 200 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="200" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="4034" max="4233"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1001"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 4.26% Of Orders In February Of Year 2010(i.e 151 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="151" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="4232" max="4382"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1002"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 4.48% Of Orders In March Of Year 2010(i.e 159 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="159" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="4383" max="4541"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1003"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 7.54% Of Orders In April Of Year 2010(i.e 292 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+   <generate name="sales_de" type="sales_de" count="292" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="4542" max="4833"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1004"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 8.7% Of Orders In May Of Year 2010(i.e 349 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="349" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="4834" max="5182"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1005"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 9.8% Of Orders In June Of Year 2010(i.e 375 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="375" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="5183" max="5557"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1006"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 12.8% Of Orders In July Of Year 2010(i.e 514 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+		
+    <generate name="sales_de" type="sales_de" count="514" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="5558" max="6071"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1007"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 12.1% Of Orders In August Of Year 2010(i.e 479 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+		<generate name="sales_de" type="sales_de" count="479" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="6072" max="6550"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1008"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 11.3% Of Orders In September Of Year 2010(i.e 453 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+    <generate name="sales_de" type="sales_de" count="453" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="6551" max="7003"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1009"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 10.9% Of Orders In October Of Year 2010(i.e 447 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="447" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="7004" max="7450"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1010"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 7.01% Of Orders In November Of Year 2010(i.e 269 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="269" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="7451" max="7719"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1011"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 4.8% Of Orders In December Of Year 2010(i.e 188 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="188" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="7720" max="7907"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1012"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration To Real Data Of Overall Orders In Germany in 2011(i.e appr. 406000 Orders), Considering 1% Of Overall Orders As Total Orders Of GBI in 2011(i.e 4060 Orders), Generating Data For Orders In 2011</comment>
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 5.91% Of Orders In January Of Year 2011(i.e 239 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+		
+	<generate name="sales_de" type="sales_de" count="239" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="7720" max="7959"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1101"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 4.26% Of Orders In February Of Year 2011(i.e 179 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="179" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="7959" max="8137"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1102"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 4.48% Of Orders In March Of Year 2011(i.e 189 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="189" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="8138" max="8326"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1103"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 7.5% Of Orders In April Of Year 2011(i.e 299 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="299" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="8327" max="8625"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1104"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 8.71% Of Orders In May Of Year 2011(i.e 344 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="344" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="8626" max="8969"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1105"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 9.82% Of Orders In June Of Year 2011(i.e 391 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="391" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="8970" max="9360"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1106"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 12.89% Of Orders In July Of Year 2011(i.e 517 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="517" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="9361" max="9877"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1107"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 12.12% Of Orders In August Of Year 2011(i.e 481 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="481" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="9878" max="10350"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1108"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 11.34% Of Orders In September Of Year 2011(i.e 453 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="453" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="10351" max="10803"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1109"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 10.98% Of Orders In October Of Year 2011(i.e 447 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="447" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="10804" max="11250"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1110"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 7.01% Of Orders In November Of Year 2011(i.e 269 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="269" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="11251" max="11519"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1111"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>
+	
+	<comment>In Consideration With Different Sources And Taking An Approximate Value, Generating 4.89% Of Orders In December Of Year 2011(i.e 199 Orders)</comment>
+	<comment>Number Of Sales Per Order Is Randomly Generated From 1 to 100 </comment>
+	<comment>Number Of Products Count Value Is Given Randomly Between 1 to 20 </comment>
+	
+	
+	<generate name="sales_de" type="sales_de" count="199" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" min="11520" max="11718"/>
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_de" source="db" selector="select vid from vendor_de" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1112"/>
+	 
+	<generate name="saledetails_de" type="saledetails_de"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid"  generator="new IncrementalIdGenerator"  mode="ignored" />
+
+     <reference name="orderid" script="sales_de.orderid"/>
+	 
+	 <reference name="materialid" type="int" targetType="sales_de" source="db" selector="select mid from material_de" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="20" /> 
+	 
+	 </generate>
+	</generate>-->
+	
+	</setup>
+	
+	     
+	
+	
+	
+	

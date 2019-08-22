@@ -1,0 +1,1121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup xmlns="http://databene.org/benerator/0.9.8"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://databene.org/benerator/0.9.8 benerator-0.9.8.xsd"
+        defaultEncoding="Cp1252"
+        defaultDataset="GB"
+        defaultLocale="en_GB"
+        defaultLineSeparator="\r\n">
+  
+  <import class="org.databene.benerator.distribution.function.*"/>
+  <import platforms="db,csv" />
+	<import defaults="true" domains="organization,address,person,net" />
+	<import class="org.databene.benerator.distribution.function.*,
+	org.databene.benerator.primitive.*,org.databene.platform.db.*"/>
+	<import class="org.databene.commons.TimeUtil"/>
+	
+	
+	<comment>
+		 Populates a database
+	</comment>
+	 
+    <comment>defining a database that will be referred by the vid 'db' later</comment>
+    <database id="db"
+        url="jdbc:mysql://localhost:3306/datagenerator"
+        driver="com.mysql.jdbc.Driver"
+        schema="datagenerator"
+		catalog="datagenerator"
+        user="root"
+        password="pramod02"/>
+		
+		
+	
+	
+	
+	<comment>Creating tables for sales and orders in US as "sales_us","saledetails_us" </comment>	
+	
+	<!--<execute target="db" >
+		 create table sales_us(
+         orderid int AUTO_INCREMENT,
+         vendorid int,
+		 sale_time varchar(100),
+		 PRIMARY KEY(orderid)
+
+     )
+		 
+	</execute>
+	
+    <comment>Creating table "saledetails_us"</comment>	
+	
+	<execute target="db" >
+		 create table saledetails_us(
+         orderdetailid int unique AUTO_INCREMENT,
+         materialid int,
+	     orderid int,
+         count int)
+		 	 
+	</execute>-->
+	
+    <comment>By Using Bean Id,Defining All Months from 2009-2011 With An Unique Identity using class "DateTimeGenerator" To Generate Data As Per Months By Defining Them As An Element In The Program </comment>
+	
+	<bean id="dtGen0901" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-01-01'/>
+		<property name='maxDate'          value='2009-01-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />				
+	</bean>
+    <bean id="dtGen1001" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-01-01'/>
+		<property name='maxDate'          value='2010-01-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />				
+	</bean>
+	<bean id="dtGen1101" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-01-01'/>
+		<property name='maxDate'          value='2011-01-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />				
+	</bean>
+	<bean id="dtGen0902" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-02-01'/>
+		<property name='maxDate'          value='2009-02-28'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1002" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-02-01'/>
+		<property name='maxDate'          value='2010-02-28'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1102" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-02-01'/>
+		<property name='maxDate'          value='2011-02-28'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>	
+	<bean id="dtGen0903" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-03-01'/>
+		<property name='maxDate'          value='2009-03-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+	<bean id="dtGen1003" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-03-01'/>
+		<property name='maxDate'          value='2010-03-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1103" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-03-01'/>
+		<property name='maxDate'          value='2011-03-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>	
+	<bean id="dtGen0904" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-04-01'/>
+		<property name='maxDate'          value='2009-04-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1004" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-04-01'/>
+		<property name='maxDate'          value='2010-04-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1104" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-04-01'/>
+		<property name='maxDate'          value='2011-04-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen0905" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-05-01'/>
+		<property name='maxDate'          value='2009-05-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1005" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-05-01'/>
+		<property name='maxDate'          value='2010-05-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1105" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-05-01'/>
+		<property name='maxDate'          value='2011-05-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen0906" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-06-01'/>
+		<property name='maxDate'          value='2009-06-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1006" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-06-01'/>
+		<property name='maxDate'          value='2010-06-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1106" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-06-01'/>
+		<property name='maxDate'          value='2011-06-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen0907" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-07-01'/>
+		<property name='maxDate'          value='2009-07-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1007" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-07-01'/>
+		<property name='maxDate'          value='2010-07-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1107" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-07-01'/>
+		<property name='maxDate'          value='2011-07-31'/>
+        <property name='dateGranularity'  value='00-00-01'  /> 		
+	</bean>
+	
+	<bean id="dtGen0908" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-08-01'/>
+		<property name='maxDate'          value='2009-08-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+	<bean id="dtGen1008" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-08-01'/>
+		<property name='maxDate'          value='2010-08-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1108" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-08-01'/>
+		<property name='maxDate'          value='2011-08-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen0909" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-09-01'/>
+		<property name='maxDate'          value='2009-09-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+	<bean id="dtGen1009" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-09-01'/>
+		<property name='maxDate'          value='2010-09-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+	<bean id="dtGen1109" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-09-01'/>
+		<property name='maxDate'          value='2011-09-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />	
+	</bean>
+	<bean id="dtGen0910" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-10-01'/>
+		<property name='maxDate'          value='2009-10-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />	
+	</bean>
+	<bean id="dtGen1010" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-10-01'/>
+		<property name='maxDate'          value='2010-10-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>
+	<bean id="dtGen1110" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-10-01'/>
+		<property name='maxDate'          value='2011-10-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />			
+	</bean>	
+	<bean id="dtGen0911" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-11-01'/>
+		<property name='maxDate'          value='2009-11-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />	
+	</bean>
+	<bean id="dtGen1011" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-11-01'/>
+		<property name='maxDate'          value='2010-11-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />	
+	</bean>
+	<bean id="dtGen1111" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-11-01'/>
+		<property name='maxDate'          value='2011-11-30'/>
+        <property name='dateGranularity'  value='00-00-01'  />	
+	</bean>
+	<bean id="dtGen0912" class="DateTimeGenerator">
+		<property name='minDate'          value='2009-12-01'/>
+		<property name='maxDate'          value='2009-12-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+		<bean id="dtGen1012" class="DateTimeGenerator">
+		<property name='minDate'          value='2010-12-01'/>
+		<property name='maxDate'          value='2010-12-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+		<bean id="dtGen1112" class="DateTimeGenerator">
+		<property name='minDate'          value='2011-12-01'/>
+		<property name='maxDate'          value='2011-12-31'/>
+        <property name='dateGranularity'  value='00-00-01'  />		
+	</bean>
+	
+	
+	<comment>Generating data for Vendor sales in USA from 2009-2011</comment> 
+	
+	 <!--<generate name="sales_us" type="sales_us" minCount="90" maxCount="100" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"   />
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0901"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator"  />
+
+     <reference name="orderid" script="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" minCount="90" maxCount="100" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  />
+	 
+	 <variable name="weightings" source="weightings.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings}"/>
+	 
+	 
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0902"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="100" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" script="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0903"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0904"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0905"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0906"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0907"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0908"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0909"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0910"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0911"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen0912"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1001"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1002"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1003"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1004"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1005"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1006"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1007"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1008"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1009"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1010"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1011"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1012"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1101"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1102"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1103"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1104"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1105"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1106"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1107"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1108"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1109"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1110"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1111"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>
+	
+	 <generate name="sales_us" type="sales_us" count="1000" consumer="db,ConsoleExporter"> 
+	 
+	 <id name="orderid" type="int" generator="new IncrementalIdGenerator"  mode="ignored" />
+	 
+	 <variable name="weightings" source="weightings01.wgt.csv" distribution="weighted"/>
+	 
+	 <reference name="vendorid" type="int" targetType="sales_us" source="db" selector="select vid from vendor_US" 
+	 
+	 nullable="false" cyclic="true" script="{weightings01}"/>
+	 
+	 <attribute name="sale_time" type="datetime" nullable="false" generator="dtGen1112"/>
+	<generate name="saledetails_us" type="saledetails_us"  minCount="1" maxCount="10" consumer="db,ConsoleExporter"> 
+		 
+	 <id name="orderdetailid" generator="new IncrementalIdGenerator" mode="ignored" />
+
+     <reference name="orderid" source="sales_us.orderid"/>
+
+	 <reference name="materialid" type="int" targetType="sales_us" source="db" selector="select mid from material_us" nullable="false" cyclic="true" distribution="random"/>
+
+	 <attribute name="count" type="int" min="1" max="100" /> 
+	  
+	 </generate>
+	</generate>-->
+	
+	
+	</setup>
+	
+	     
+	
+	
+	
+	
